@@ -163,12 +163,12 @@ export function WorkCard({ item, index }) {
 
               {/* Tech tags */}
               <div className="flex flex-wrap gap-2 mt-auto">
-                {item.tags.map((tag) => (
+                {(item.tags ? item.tags.split(',') : []).map((tag) => (
                   <span
                     key={tag}
                     className="font-mono text-xs text-zinc-500 border border-zinc-800 px-2 py-0.5"
                   >
-                    {tag}
+                    {tag.trim()}
                   </span>
                 ))}
               </div>

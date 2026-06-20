@@ -1,12 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { portfolioData } from '../../data/portfolioData';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PHOTO GRID + LIGHTBOX
 // ─────────────────────────────────────────────────────────────────────────────
 export function PhotoGrid() {
+  const [photos, setPhotos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [lightbox, setLightbox] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:5259/api/portfolio/photos')
+      .then(res => {
+        if (!res.ok) throw new Error('Błąd pobierania danych');
+        return res.json();
+      })
+      .then(data => {
+        setPhotos(data);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setError('Nie udało się załadować zdjęć.');
+        setIsLoading(false);
+      });
+  }, []);
 
   // Close on Escape key
   useEffect(() => {
@@ -16,11 +35,19 @@ export function PhotoGrid() {
     return () => window.removeEventListener("keydown", onKey);
   }, [lightbox]);
 
+  if (isLoading) {
+    return <div className="text-center py-10 text-zinc-500 font-mono">Ładowanie zdjęć z bazy...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-10 text-red-500 font-mono">{error}</div>;
+  }
+
   return (
     <>
       {/* Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-zinc-800">
-        {portfolioData.cameramanPhotos.map((photo, i) => (
+        {photos.map((photo, i) => (
           <motion.button
             key={photo.id}
             initial={{ opacity: 0, scale: 0.95 }}

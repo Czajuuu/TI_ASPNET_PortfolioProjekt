@@ -1,5 +1,4 @@
 import React from 'react';
-import { portfolioData } from '../../data/portfolioData';
 import { PhotoGrid } from '../ui/PhotoGrid';
 import { VideoPlayer } from '../ui/VideoPlayer';
 import { motion } from 'framer-motion';
