@@ -1,0 +1,106 @@
+@model Portfolio.Backend.Models.Project
+
+@{
+    ViewData["Title"] = "Dodaj Nowy Projekt";
+}
+
+<div class="mb-4">
+    <h2>Dodaj Nowy Projekt Wideo</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">&larr; Powrót do listy</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Title" class="form-label fw-bold">Tytuł projektu <span class="text-danger">*</span></label>
+                    <input asp-for="Title" class="form-control" placeholder="np. Promocyjny Film - Piecyki Gazowe" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Subtitle" class="form-label fw-bold">Podtytuł / Kategoria <span class="text-danger">*</span></label>
+                    <input asp-for="Subtitle" class="form-control" placeholder="np. Produkcja Wideo" />
+                    <span asp-validation-for="Subtitle" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label fw-bold">Opis projektu <span class="text-danger">*</span></label>
+                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Pełny opis wideo, uwzględniający cel, miejsce..."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Tags" class="form-label fw-bold">Tagi technologiczne <span class="text-danger">*</span></label>
+                <input asp-for="Tags" class="form-control" placeholder="Rozdzielone przecinkami (np. Dron, Davinci Resolve, Animacje)" />
+                <span asp-validation-for="Tags" class="text-danger"></span>
+                <div class="form-text">Użyj przecinka, aby rozdzielić poszczególne tagi. Frontend sam zamieni je na kafelki.</div>
+            </div>
+
+            <hr class="my-4" />
+            <h5 class="mb-3">Źródła Wideo & Zdjęcia</h5>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Type" class="form-label fw-bold">Typ Posta</label>
+                    <select asp-for="Type" class="form-select">
+                        <option value="video">Wideo (video)</option>
+                        <option value="web">Strona www (web)</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="VideoType" class="form-label fw-bold">Sposób osadzenia wideo</label>
+                    <select asp-for="VideoType" class="form-select">
+                        <option value="local">Plik lokalny z serwera (local)</option>
+                        <option value="youtube">Link z YouTube (youtube)</option>
+                        <option value="placeholder">Brak wideo (placeholder)</option>
+                    </select>
+                    <span asp-validation-for="VideoType" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="VideoSrc" class="form-label">Link Wideo (PL)</label>
+                    <input asp-for="VideoSrc" class="form-control" placeholder="/media/plik-pl.mp4" />
+                    <span asp-validation-for="VideoSrc" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="VideoSrcEn" class="form-label">Link Wideo (EN)</label>
+                    <input asp-for="VideoSrcEn" class="form-control" placeholder="/media/plik-en.mp4" />
+                    <span asp-validation-for="VideoSrcEn" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="VideoSrcDe" class="form-label">Link Wideo (DE)</label>
+                    <input asp-for="VideoSrcDe" class="form-control" placeholder="/media/plik-de.mp4" />
+                    <span asp-validation-for="VideoSrcDe" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Thumb" class="form-label">Ścieżka do miniatury (Thumb)</label>
+                    <input asp-for="Thumb" class="form-control" placeholder="https://unsplash... lub /media/thumb.jpg" />
+                    <span asp-validation-for="Thumb" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Link" class="form-label">Zewnętrzny Link (dla stron www)</label>
+                    <input asp-for="Link" class="form-control" placeholder="https://twojastrona.pl" />
+                    <span asp-validation-for="Link" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success px-5 fw-bold">Zapisz Projekt</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
