@@ -11,7 +11,7 @@
 
 <div class="card shadow-sm">
     <div class="card-body">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
             <div class="row">
@@ -63,29 +63,31 @@
                 </div>
             </div>
 
+            <!-- Ukryte pola źródłowe, aby zachowały wartość pustą, jeśli zostaną nadpisane przez wgrywane pliki -->
+            <input type="hidden" asp-for="VideoSrc" value="" />
+            <input type="hidden" asp-for="VideoSrcEn" value="" />
+            <input type="hidden" asp-for="VideoSrcDe" value="" />
+            <input type="hidden" asp-for="Thumb" value="" />
+
             <div class="row">
                 <div class="col-md-4 mb-3">
-                    <label asp-for="VideoSrc" class="form-label">Link Wideo (PL)</label>
-                    <input asp-for="VideoSrc" class="form-control" placeholder="/media/plik-pl.mp4" />
-                    <span asp-validation-for="VideoSrc" class="text-danger"></span>
+                    <label class="form-label">Wgraj Wideo (PL)</label>
+                    <input type="file" name="uploadedVideoSrc" class="form-control" accept="video/mp4,video/webm" />
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label asp-for="VideoSrcEn" class="form-label">Link Wideo (EN)</label>
-                    <input asp-for="VideoSrcEn" class="form-control" placeholder="/media/plik-en.mp4" />
-                    <span asp-validation-for="VideoSrcEn" class="text-danger"></span>
+                    <label class="form-label">Wgraj Wideo (EN)</label>
+                    <input type="file" name="uploadedVideoSrcEn" class="form-control" accept="video/mp4,video/webm" />
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label asp-for="VideoSrcDe" class="form-label">Link Wideo (DE)</label>
-                    <input asp-for="VideoSrcDe" class="form-control" placeholder="/media/plik-de.mp4" />
-                    <span asp-validation-for="VideoSrcDe" class="text-danger"></span>
+                    <label class="form-label">Wgraj Wideo (DE)</label>
+                    <input type="file" name="uploadedVideoSrcDe" class="form-control" accept="video/mp4,video/webm" />
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label asp-for="Thumb" class="form-label">Ścieżka do miniatury (Thumb)</label>
-                    <input asp-for="Thumb" class="form-control" placeholder="https://unsplash... lub /media/thumb.jpg" />
-                    <span asp-validation-for="Thumb" class="text-danger"></span>
+                    <label class="form-label">Wgraj miniaturę (Thumb)</label>
+                    <input type="file" name="uploadedThumb" class="form-control" accept="image/*" />
                 </div>
                 <div class="col-md-6 mb-3">
                     <label asp-for="Link" class="form-label">Zewnętrzny Link (dla stron www)</label>

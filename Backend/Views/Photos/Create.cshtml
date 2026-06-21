@@ -1,0 +1,48 @@
+@model Portfolio.Backend.Models.Photo
+
+@{
+    ViewData["Title"] = "Dodaj Nowe Zdjęcie";
+}
+
+<div class="mb-4">
+    <h2>Dodaj Nowe Zdjęcie Do Galerii</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">&larr; Powrót do listy</a>
+</div>
+
+<div class="card shadow-sm border-primary">
+    <div class="card-body">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="mb-4">
+                <label class="form-label fw-bold">Wybierz Plik Zdjęcia z Dysku <span class="text-danger">*</span></label>
+                <input type="file" name="uploadedFile" class="form-control" accept="image/*" required />
+                <div class="form-text">Zdjęcie zostanie wgrane na serwer i automatycznie przypisane do wpisu.</div>
+            </div>
+
+            <!-- Ukryte pole Src, bo uzupełni się samo -->
+            <input type="hidden" asp-for="Src" value="/tymczasowy-brak" />
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Caption" class="form-label fw-bold">Opis (Caption) <span class="text-danger">*</span></label>
+                    <input asp-for="Caption" class="form-control" placeholder="np. Sesja narzeczeńska" />
+                    <span asp-validation-for="Caption" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Alt" class="form-label fw-bold">Tekst alternatywny (Alt) <span class="text-danger">*</span></label>
+                    <input asp-for="Alt" class="form-control" placeholder="Opis co widać na zdjęciu, dla SEO" />
+                    <span asp-validation-for="Alt" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success px-5 fw-bold">Zapisz i Wgraj Zdjęcie</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Backend.Data;
 using Portfolio.Backend.Models;
+using Portfolio.Backend.Services;
 
 namespace Portfolio.Backend.Controllers
 {
@@ -10,10 +11,12 @@ namespace Portfolio.Backend.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IFileService _fileService;
 
-        public AdminController(ApplicationDbContext context)
+        public AdminController(ApplicationDbContext context, IFileService fileService)
         {
             _context = context;
+            _fileService = fileService;
         }
 
         // GET: /Admin
@@ -33,10 +36,15 @@ namespace Portfolio.Backend.Controllers
         // POST: /Admin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Project project)
+        public async Task<IActionResult> Create(Project project, IFormFile? uploadedVideoSrc, IFormFile? uploadedVideoSrcEn, IFormFile? uploadedVideoSrcDe, IFormFile? uploadedThumb)
         {
             if (ModelState.IsValid)
             {
+                if (uploadedVideoSrc != null) project.VideoSrc = await _fileService.UploadFileAsync(uploadedVideoSrc);
+                if (uploadedVideoSrcEn != null) project.VideoSrcEn = await _fileService.UploadFileAsync(uploadedVideoSrcEn);
+                if (uploadedVideoSrcDe != null) project.VideoSrcDe = await _fileService.UploadFileAsync(uploadedVideoSrcDe);
+                if (uploadedThumb != null) project.Thumb = await _fileService.UploadFileAsync(uploadedThumb);
+
                 _context.Add(project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -58,7 +66,7 @@ namespace Portfolio.Backend.Controllers
         // POST: /Admin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Project project)
+        public async Task<IActionResult> Edit(int id, Project project, IFormFile? uploadedVideoSrc, IFormFile? uploadedVideoSrcEn, IFormFile? uploadedVideoSrcDe, IFormFile? uploadedThumb)
         {
             if (id != project.Id) return NotFound();
 
@@ -66,6 +74,11 @@ namespace Portfolio.Backend.Controllers
             {
                 try
                 {
+                    if (uploadedVideoSrc != null) project.VideoSrc = await _fileService.UploadFileAsync(uploadedVideoSrc);
+                    if (uploadedVideoSrcEn != null) project.VideoSrcEn = await _fileService.UploadFileAsync(uploadedVideoSrcEn);
+                    if (uploadedVideoSrcDe != null) project.VideoSrcDe = await _fileService.UploadFileAsync(uploadedVideoSrcDe);
+                    if (uploadedThumb != null) project.Thumb = await _fileService.UploadFileAsync(uploadedThumb);
+
                     _context.Update(project);
                     await _context.SaveChangesAsync();
                 }

@@ -20,16 +20,21 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            @if (User.Identity != null && User.Identity.IsAuthenticated)
-                            {
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
                                 <a class="nav-link text-dark fw-bold text-primary" asp-area="" asp-controller="Admin" asp-action="Index">Projekty (CMS)</a>
-                            }
-                            else
-                            {
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark fw-bold text-success" asp-area="" asp-controller="Photos" asp-action="Index">Galeria Zdjęć (CMS)</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            }
-                        </li>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>

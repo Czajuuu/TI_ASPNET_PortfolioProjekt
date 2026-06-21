@@ -1,0 +1,56 @@
+@model Portfolio.Backend.Models.Photo
+
+@{
+    ViewData["Title"] = "Edytuj Zdjęcie";
+}
+
+<div class="mb-4">
+    <h2>Edytuj Zdjęcie</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">&larr; Powrót do listy</a>
+</div>
+
+<div class="card shadow-sm border-primary">
+    <div class="card-body">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            
+            <div class="mb-4 p-3 bg-light border rounded d-flex align-items-center">
+                <div class="me-4">
+                    @if(!string.IsNullOrEmpty(Model.Src)) {
+                        <img src="http://localhost:5173@(Model.Src)" alt="Obecne" style="max-height: 120px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" />
+                    }
+                </div>
+                <div>
+                    <label class="form-label fw-bold">Podmień Plik Zdjęcia (Opcjonalnie)</label>
+                    <input type="file" name="uploadedFile" class="form-control" accept="image/*" />
+                    <div class="form-text">Zostaw puste, jeśli nie chcesz podmieniać obrazka na dysku.</div>
+                </div>
+            </div>
+
+            <!-- Zachowanie istniejącej ścieżki -->
+            <input type="hidden" asp-for="Src" />
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Caption" class="form-label fw-bold">Opis (Caption) <span class="text-danger">*</span></label>
+                    <input asp-for="Caption" class="form-control" />
+                    <span asp-validation-for="Caption" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Alt" class="form-label fw-bold">Tekst alternatywny (Alt) <span class="text-danger">*</span></label>
+                    <input asp-for="Alt" class="form-control" />
+                    <span asp-validation-for="Alt" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary px-5 fw-bold">Zaktualizuj Zdjęcie</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
