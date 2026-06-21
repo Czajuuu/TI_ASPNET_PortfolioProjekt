@@ -13,6 +13,3 @@ Nowoczesna aplikacja webowa pełniąca rolę portfolio (z ukierunkowaniem na pro
 *   `Frontend/` - Kod źródłowy aplikacji React.
 *   `Backend/` - Kod źródłowy API i Panelu CMS w środowisku ASP.NET Core.
 
-## Instrukcja Uruchomienia (Wersja Deweloperska)
-
-Więcej szczegółów wkrótce...
